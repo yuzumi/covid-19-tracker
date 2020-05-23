@@ -1,7 +1,28 @@
 import React from 'react';
+import { Cards } from 'src/components';
+import { initFetch } from "src/api";
+import 'src/App.module.css';
 
-const App = () => (
-  <div className="app"></div>
-);
+export default class App extends React.Component {
+  state = {
+    data: {}
+  }
 
-export default App;
+  async componentDidMount() {
+    const data = await initFetch();
+    
+    this.setState({ data });
+  }
+
+  render() {
+    const { data } = this.state;
+
+    return (
+      <div className='app'>
+        <div className="container">
+          <Cards data={data} />
+        </div>
+      </div>
+    );
+  }
+}

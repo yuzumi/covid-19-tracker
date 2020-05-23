@@ -1,0 +1,1 @@
+export { default as Cards } from 'src/components/cards/Cards';
