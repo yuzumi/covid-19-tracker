@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Bar } from "react-chartjs-2";
-import { prop, isArray } from "lodash/fp";
+import { prop, isArray, isEmpty } from "lodash/fp";
 import { fetchDailyData } from "src/api";
 import styles from "src/components/chart/Chart.module.css";
 
-const Chart = () => {
+const Chart = ({ data, country }) => {
   const [dailyData, setDailyData] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const Chart = () => {
     };
 
     fetchAndSetDailyData();
-  });
+  }, []);
 
   const lineChart = (
     isArray(dailyData) ? (
@@ -37,9 +37,38 @@ const Chart = () => {
     ) : null
   );
 
+  const barChart = (
+    isEmpty(data)
+      ? null
+      : (
+        <Bar 
+          data={{
+            labels: ["Infected", "Recovered", "Deaths"],
+            datasets: [{
+              label: "People",
+              backgroundColor: [
+                "rgba(0, 0, 255, 0.5)",
+                "rgba(0, 255, 0, 0.5)",
+                "rgba(255, 0, 0, 0.5)",
+              ],
+              data: [
+                data.confirmed.value,
+                data.recovered.value,
+                data.deaths.value
+              ]
+            }]
+          }}
+          options={{
+            legend: { display: false },
+            title: { display: true, text: `Current state in ${country}` }
+          }}
+        />
+      )
+  );
+
   return (
     <div className={styles.container}>
-      {lineChart}
+      {country ? barChart : lineChart}
     </div>
   );
 };

@@ -1,9 +1,13 @@
 import httpClient from "src/services/http-client";
 import pick from "lodash/fp/pick";
 
-export const initFetch = async () => {
+export const fetchData = async (country) => {
+  const resource = country 
+    ? `/countries/${country}`
+    : `/`;
+
   try {
-    const response = await httpClient.get();
+    const response = await httpClient.get(resource);
     
     const data = pick(
       ["confirmed", "recovered", "deaths", "lastUpdate"], 
@@ -26,4 +30,11 @@ export const fetchDailyData = async () => {
 
     return data;
   } catch (error) { }
+};
+
+export const fetchCountries = async () => {
+  try {
+    const response = await httpClient.get("/countries");
+    return response.data.countries.map(pick(["name"]));
+  } catch (error) {}
 };
