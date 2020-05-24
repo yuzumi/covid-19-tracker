@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cards } from 'src/components';
+import { Cards, Chart } from 'src/components';
 import { initFetch } from "src/api";
 import 'src/App.module.css';
 
@@ -21,6 +21,7 @@ export default class App extends React.Component {
       <div className='app'>
         <div className="container">
           <Cards data={data} />
+          <Chart />
         </div>
       </div>
     );
