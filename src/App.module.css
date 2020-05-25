@@ -1,0 +1,14 @@
+.covid19 {
+  width: 24rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 770px) {
+  .container {
+    margin: 0 10%;
+  }
+
+  .covid19 {
+    width: 55%;
+  }
+}
